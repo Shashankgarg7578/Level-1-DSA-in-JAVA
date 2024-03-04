@@ -22,6 +22,26 @@ public class Cicular_Queue_01 {
         }
     }
 
+    void dynamicAdd(int val) {
+        if (size == data.length) {
+            int[] ndata = new int[2 * data.length];
+
+            for (int i = 0; i < data.length; i++) {
+                ndata[i] = data[i];
+            }
+            data = ndata;
+
+            int rear = (front + size) % data.length;
+            data[rear] = val;
+            size++;
+        } else {
+            int rear = (front + size) % data.length;
+            data[rear] = val;
+            size++;
+        }
+    }
+
+
     int peek() {
         if (size == 0) {
             return -1;
@@ -59,7 +79,10 @@ public class Cicular_Queue_01 {
         queue.add(30);
         queue.add(40);
         queue.add(50);
+        queue.display();
 
+        queue.dynamicAdd(60);
+        System.out.println();
         queue.display();
 
         System.out.println();
