@@ -1,12 +1,12 @@
 package Queue_05;
 
-public class Normal_Queue_01 {
+public class Cicular_Queue_01 {
 
     int[] data;
     int front;
     int size;
 
-    public Normal_Queue_01(int cap) {
+    public Cicular_Queue_01(int cap) {
         data = new int[cap];
         front = 0;
         size = 0;
@@ -53,7 +53,7 @@ public class Normal_Queue_01 {
     }
 
     public static void main(String[] args) {
-        Normal_Queue_01 queue = new Normal_Queue_01(5);
+        Cicular_Queue_01 queue = new Cicular_Queue_01(5);
         queue.add(10);
         queue.add(20);
         queue.add(30);
