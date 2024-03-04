@@ -5,8 +5,8 @@ import java.util.Queue;
 
 public class Queue_to_Stack_Push_Efficient_03 {
 
-    Queue<Integer> mainQ = new ArrayDeque<>();
-    Queue<Integer> helperQ = new ArrayDeque<>();
+   private Queue<Integer> mainQ = new ArrayDeque<>();
+   private Queue<Integer> helperQ = new ArrayDeque<>();
 
     void push(int val) {
         mainQ.add(val);
