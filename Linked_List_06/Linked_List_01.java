@@ -234,9 +234,9 @@ public class Linked_List_01 {
             return slow.data;
         }
 
-        int middleOfLinkedList() {
+        Node middleOfLinkedList() {
             if (size == 0) {
-                return -1;
+                return null;
             }
 
             Node slow = head;
@@ -247,7 +247,7 @@ public class Linked_List_01 {
                 fast = fast.next.next;
             }
 
-            return slow.data;
+            return slow;
         }
 
         void displayReverse(Node node) {
@@ -268,9 +268,78 @@ public class Linked_List_01 {
             }
         }
 
+        CustomLinkedList mergeTwoSortedLinkedLists(CustomLinkedList list1, CustomLinkedList list2) {
+            Node one = list1.head;
+            Node two = list2.head;
+            CustomLinkedList res = new CustomLinkedList();
 
+            while (one != null && two != null) {
+                if (one.data <= two.data) {
+                    res.addLast(one.data);
+                    one = one.next;
+                } else if (one.data > two.data) {
+                    res.addLast(two.data);
+                    two = two.next;
+                }
+            }
+            while (one != null) {
+                res.addLast(one.data);
+                one = one.next;
+            }
+            while (two != null) {
+                res.addLast(two.data);
+                two = two.next;
+            }
+            return res;
+        }
 
+        Node middleOfLinkedListForMergeSort(Node head, Node tail) {
+            Node slow = head;
+            Node fast = head;
 
+            while (fast != tail && fast.next != tail) {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            return slow;
+        }
+
+        CustomLinkedList mergeSort(Node head, Node tail) {
+            if (head == tail) {
+                CustomLinkedList tempList = new CustomLinkedList();
+                tempList.addLast(head.data);
+                return tempList;
+            }
+
+            Node mid = middleOfLinkedListForMergeSort(head, tail);
+            CustomLinkedList fsh = mergeSort(head, mid);
+            CustomLinkedList ssh = mergeSort(mid.next, tail);
+
+            return mergeTwoSortedLinkedLists(fsh, ssh);
+        }
+
+        int interSactionPointOfLinkedList(final CustomLinkedList list1, final CustomLinkedList list2) {
+            Node one = list1.head;
+            Node two = list2.head;
+            int delta = Math.abs(list1.size() - list2.size());
+
+            if (list1.size() > list2.size()) {
+                for (int i = 0; i < delta; i++) {
+                    one = one.next;
+                }
+            } else {
+                for (int i = 0; i < delta; i++) {
+                    two = two.next;
+                }
+            }
+
+            while (one != null && two != null && one.data != two.data) {
+                one = one.next;
+                two = two.next;
+            }
+
+            return one.data;
+        }
     }
 
     public static void main(String[] args) throws IOException {
@@ -309,7 +378,7 @@ public class Linked_List_01 {
                 int val = Integer.parseInt(str.split(" ")[1]);
                 System.out.println(list.kthElementFromLast(val));
             } else if (str.startsWith("middleOfLinkedList")) {
-                System.out.println(list.middleOfLinkedList());
+                System.out.println(list.middleOfLinkedList() != null ? list.middleOfLinkedList().data : "UnderFow!!");
             } else if (str.equals("displayReverse")) {
                 list.displayReverse(list.head);
             } else if (str.equals("display")) {
@@ -318,6 +387,54 @@ public class Linked_List_01 {
                 LinkedList<Integer> removedDuplicatesList = new LinkedList<>();
                 list.removeDuplicates(removedDuplicatesList);
                 System.out.print(removedDuplicatesList);
+            } else if (str.equals("mergeTwoSortedLinkedLists")) {
+                CustomLinkedList list1 = new CustomLinkedList();
+                list1.addLast(2);
+                list1.addLast(5);
+                list1.addLast(9);
+                list1.addLast(12);
+
+                CustomLinkedList list2 = new CustomLinkedList();
+                list2.addLast(7);
+                list2.addLast(9);
+                list2.addLast(11);
+                list2.addLast(15);
+                list2.addLast(25);
+                list2.addLast(28);
+
+                CustomLinkedList result = list.mergeTwoSortedLinkedLists(list1, list2);
+                Node temp = result.head;
+                while (temp != null) {
+                    System.out.print(temp.data + " ");
+                    temp = temp.next;
+                }
+            } else if (str.equals("mergeSort")) {
+                CustomLinkedList result = list.mergeSort(list.head, list.tail);
+                Node temp = result.head;
+                while (temp != null) {
+                    System.out.print(temp.data + " ");
+                    temp = temp.next;
+                }
+            } else if (str.equals("interSactionPointOfLinkedList")) {
+                CustomLinkedList list1 = new CustomLinkedList();
+                list1.addLast(20);
+                list1.addLast(2);
+                list1.addLast(5);
+                list1.addLast(6);
+                list1.addLast(8);
+                list1.addLast(10);
+                list1.addLast(12);
+                list1.addLast(13);
+
+                CustomLinkedList list2 = new CustomLinkedList();
+                list2.addLast(15);
+                list2.addLast(1);
+                list2.addLast(10);
+                list2.addLast(12);
+                list2.addLast(13);
+
+                System.out.println("Intersaction Of Linked List is :-"+list.interSactionPointOfLinkedList(list1, list2));
+
             }
             str = br.readLine();
         }
